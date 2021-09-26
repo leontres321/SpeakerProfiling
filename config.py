@@ -2,7 +2,7 @@ import os
 
 class TIMITConfig(object):
     # path to the unzuipped TIMIT data folder
-    data_path = '/home/shangeth/DATASET/TIMIT/wav_data'
+    data_path = '/content/SpeakerProfiling/dataset/wav_data'
 
     # path to csv file containing age, heights of timit speakers
     speaker_csv_path = os.path.join(str(os.getcwd()), 'src/Dataset/data_info_height_age.csv')
@@ -12,7 +12,7 @@ class TIMITConfig(object):
     # 16000 * 2
 
     batch_size = 150
-    epochs = 200
+    epochs = 20
     
     # loss = alpha * height_loss + beta * age_loss + gamma * gender_loss
     alpha = 1
@@ -44,7 +44,7 @@ class TIMITConfig(object):
     model_checkpoint = None
     
     # noise dataset for augmentation
-    noise_dataset_path = '/home/shangeth/noise_dataset'
+    noise_dataset_path = '/content/SpeakerProfiling/noise_dataset'
 
     # LR of optimizer
     lr = 1e-3

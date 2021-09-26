@@ -108,9 +108,13 @@ if __name__ == "__main__":
     model = LightningModel(vars(hparams))
 
     checkpoint_callback = ModelCheckpoint(
+        dirpath='/content/SpeakerProfiling/checkpoint',
+        filename='{epoch}-{val_loss:.2f}-{other_metric:.2f}',
         monitor='val/loss', 
         mode='min',
-        verbose=1)
+        verbose=True,
+        save_last=True
+        )
 
     trainer = Trainer(
         fast_dev_run=hparams.dev, 
@@ -124,7 +128,8 @@ if __name__ == "__main__":
                 patience=20,
                 verbose=True,
                 mode='min'
-                )
+                ),
+            checkpoint_callback
         ],
         logger=logger,
         resume_from_checkpoint=hparams.model_checkpoint,
@@ -133,6 +138,6 @@ if __name__ == "__main__":
 
     trainer.fit(model, train_dataloader=trainloader, val_dataloaders=valloader)
 
-    # print('\n\nCompleted Training...\nTesting the model with checkpoint -', checkpoint_callback.best_model_path)
-    # model = LightningModel.load_from_checkpoint(checkpoint_callback.best_model_path)
-    # trainer.test(model, test_dataloaders=testloader)
+    #print('\n\nCompleted Training...\nTesting the model with checkpoint -', checkpoint_callback.best_model_path)
+    #model = LightningModel.load_from_checkpoint(checkpoint_callback.best_model_path)
+    #trainer.test(model, test_dataloaders=testloader)
